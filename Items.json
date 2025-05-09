@@ -1,0 +1,55 @@
+[
+    {
+        "id":  1,
+        "name": "Iron Shield",
+        "description": "A sturdy shield made of iron. Offers solid protection.",
+        "statEffects": [
+            "Armor up"
+        ],
+        "price": 150,
+        "pointBonus": 10
+    },
+    {
+        "id": 2,
+        "name": "Cursed Dagger",
+        "description": "A wicked blade that saps your strength but boosts your damage.",
+        "statEffects": [
+            "Minor HP down",
+            "Major Damage up"
+        ],
+        "price": 120,
+        "pointBonus": 15
+    },
+    {
+        "id": 3,
+        "name": "Healing Herb",
+        "description": "A natural herb known for minor restorative properties.",
+        "statEffects": [
+            "Minor HP up"
+        ],
+        "price": 30,
+        "pointBonus": 5
+    },
+    {
+        "id": 4,
+        "name": "Spiked Pauldrons",
+        "description": "Armor that intimidates and protects.",
+        "statEffects": [
+            "Major Armor up",
+            "Minor Dammage up"
+        ],
+        "price": 200,
+        "pointBonus": 20
+    },
+    {
+        "id": 5,
+        "name": "Withering Talisman",
+        "description": "A cursed charm that weakens your body but tells you stat effects for every item you see.",
+        "statEffects": [
+            "Major HP down",
+            "Minor Armor down"
+        ],
+        "price": 75,
+        "pointBonus": 25
+    }
+]

@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "name": "basic bitch",
+        "dammage": 15,
+        "HP": 100
+    },
+    {
+        "id": 2,
+        "name": "strong bitch",
+        "dammage": 35,
+        "HP": 100
+    },
+    {
+        "id": 3,
+        "name": "buff bitch",
+        "dammage": 10,
+        "HP": 200
+    }
+]

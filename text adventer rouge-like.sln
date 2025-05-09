@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35828.75 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "text adventer rouge-like", "text adventer rouge-like.csproj", "{63CA878C-FBCA-459F-9AA5-1C72C1B99C5B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{63CA878C-FBCA-459F-9AA5-1C72C1B99C5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63CA878C-FBCA-459F-9AA5-1C72C1B99C5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63CA878C-FBCA-459F-9AA5-1C72C1B99C5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63CA878C-FBCA-459F-9AA5-1C72C1B99C5B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {39578A32-FCBC-4BDF-BCA4-15EC4D81D28D}
+	EndGlobalSection
+EndGlobal

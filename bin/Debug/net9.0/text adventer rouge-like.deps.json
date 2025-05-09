@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "text adventer rouge-like/1.0.0": {
+        "runtime": {
+          "text adventer rouge-like.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "text adventer rouge-like/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
