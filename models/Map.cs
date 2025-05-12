@@ -37,7 +37,7 @@ namespace text_adventer_rouge_like.models
 
         //this will actualy draw out the map row by row.
         //it will store the map as a string in the MapString var.
-        //it will only gennerate a new map when the player moves.
+        //it will only gennerate a new string when the player moves.
 
         public string GennerateMap(Player player)
         {
@@ -60,28 +60,36 @@ namespace text_adventer_rouge_like.models
                     for (int j = -this.Width; j < this.Width + 1; j++)
                     {
                         if (j == this.XPosition && this.Positions.Where(Position => Position.XPosition == j).Any() && this.Positions.Where(Position => Position.YPosition == i).Any()) { map += PlayerMarker; }
+
                         else if (j == this.XPosition) { map += PlayerMarker; }
+
                         else if (this.Positions.Where(Position => Position.XPosition == j && Position.YPosition == i).Any()) { map += Explored; }
+
                         else { map += MapMark; }
                     }
                 }
+
                 else if (this.Positions.Where(Position => Position.YPosition == i).Any())
                 {
                     for (int j = -this.Width; j < this.Width + 1; j++)
                     {
                         if (this.Positions.Where(Position => Position.XPosition == j && Position.YPosition == i).Any() && this.Positions.Where(Position => Position.YPosition == i).Any()) { map += Explored; }
+
                         else { map += MapMark; }
                     }
                 }
+
                 else if (i == this.YPosition && player.YPosition > -this.Hight && player.YPosition < this.Hight)
                 {
                     for (int j = -this.Width; j < this.Width + 1; j++)
                     {
 
                         if (j == this.XPosition && player.XPosition > -this.Width) { map += PlayerMarker; }
+
                         else { map += MapMark; }
                     }
                 }
+
                 else
                 {
                     for (int j = -this.Width; j < this.Width + 1; j++)
@@ -89,6 +97,7 @@ namespace text_adventer_rouge_like.models
                         map += MapMark;
                     }
                 }
+
                 map += "\n";
             }
 

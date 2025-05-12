@@ -12,3 +12,4 @@ C:\Users\brade\source\repos\text adventer rouge-like\obj\Debug\net9.0\refint\tex
 C:\Users\brade\source\repos\text adventer rouge-like\obj\Debug\net9.0\text adventer rouge-like.pdb
 C:\Users\brade\source\repos\text adventer rouge-like\obj\Debug\net9.0\text adventer rouge-like.genruntimeconfig.cache
 C:\Users\brade\source\repos\text adventer rouge-like\obj\Debug\net9.0\ref\text adventer rouge-like.dll
+C:\Users\brade\source\repos\text adventer rouge-like\obj\Debug\net9.0\text adventer rouge-like.sourcelink.json

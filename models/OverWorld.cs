@@ -38,22 +38,26 @@ namespace text_adventer_rouge_like.models
                 ConsoleKeyInfo keyInfo = Console.ReadKey(intercept: true);
 
                 Random RandomDeath = new Random();
+                Random RandomIncounter = new Random();
 
                 if (keyInfo.Key == ConsoleKey.H)
                 {
                     Console.Clear();
-                    Console.WriteLine("I = Inventory \nTab = Player stats \n...");
+                    Console.WriteLine("I = Inventory \nTab = Player stats \nArrow Keys = player movement \n...");
                 }
+
                 if (keyInfo.Key == ConsoleKey.I)
                 {
                     Console.Clear();
                     player.VeiwInventory();
                 }
+
                 if (keyInfo.Key == ConsoleKey.Tab)
                 {
                     Console.Clear();
-                    Console.WriteLine(player.ToString()); 
+                    Console.WriteLine(player.ToString());
                 }
+
                 if (keyInfo.Key == ConsoleKey.Escape)
                 {
                     Console.Clear();
@@ -64,6 +68,7 @@ namespace text_adventer_rouge_like.models
                         EndGame(false);
                     }
                 }
+
                 if (keyInfo.Key == ConsoleKey.UpArrow)
                 {
                     Console.Clear();
@@ -83,9 +88,11 @@ namespace text_adventer_rouge_like.models
                     }
                     map.GennerateMap(player);
                 }
+
                 if (keyInfo.Key == ConsoleKey.DownArrow)
                 {
                     Console.Clear();
+
                     if (player.HardMode)
                     {
                         if (RandomDeath.Next(1, 2000) == 7)
@@ -102,6 +109,7 @@ namespace text_adventer_rouge_like.models
                     }
                     map.GennerateMap(player);
                 }
+
                 if (keyInfo.Key == ConsoleKey.RightArrow)
                 {
                     Console.Clear();
@@ -121,6 +129,7 @@ namespace text_adventer_rouge_like.models
                     }
                     map.GennerateMap(player);
                 }
+
                 if (keyInfo.Key == ConsoleKey.LeftArrow)
                 {
                     Console.Clear();
@@ -148,6 +157,51 @@ namespace text_adventer_rouge_like.models
                     this.EndGame(true);
                 }
             }
+        }
+
+        public void Combat(Player player)
+        {
+            Enemies enemie = new Enemies();
+            bool InCombat = true;
+            while (InCombat)
+            {
+                Console.Clear();
+                Console.WriteLine($"you are in combat with {enemie.Name}!");
+                ConsoleKeyInfo keyInfo = Console.ReadKey(intercept: true);
+
+                if (keyInfo.Key == ConsoleKey.E)
+                {
+                    Console.Clear();
+                    enemie.HP -= player.Damage;
+                    Console.WriteLine($"you hit the {enemie.Name}");
+
+                }
+
+                if (keyInfo.Key == ConsoleKey.Tab)
+                {
+                    Console.Clear();
+                    Console.WriteLine(player.ToString());
+                }
+
+                if (keyInfo.Key == ConsoleKey.I)
+                {
+                    Console.Clear();
+                    player.VeiwInventory();
+                }
+                
+                if (keyInfo.Key == ConsoleKey.H)
+                {
+                    Console.Clear();
+                    Console.WriteLine("I = Inventory \nTab = Player stats \n...");
+                }
+
+                if (enemie.HP <= 0)
+                {
+                    Console.WriteLine($"yay you did it!! The {enemie.Name} has fallen!");
+                    InCombat = false;
+                }
+            }
+
         }
 
         //this method handles when you end the game... wow couldent tell right
