@@ -180,9 +180,9 @@ namespace text_adventer_rouge_like.models
 
         public void VeiwInventory()
         {
+            Console.Clear();
             foreach (Item item in this.Items)
             {
-                Console.Clear();
                 Console.WriteLine(item.ToString());
             }
         }

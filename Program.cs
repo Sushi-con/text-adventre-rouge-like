@@ -9,11 +9,11 @@ string Json = await File.ReadAllTextAsync(pathToItemJson);
 List<Item> items = new List<Item>();
 items = JsonSerializer.Deserialize<List<Item>>(Json);
 
-string pathToEnemesJson = "./Items.json";
-//string Json = File.ReadAllText(pathToEnemesJson);
-//List<Item> items = new List<Item>();
-//items = JsonSerializer.Deserialize<List<Item>>(Json);
+string pathToEnemesJson = "./enemes.json";
+string EnemiesJson = File.ReadAllText(pathToEnemesJson);
+List<Enemies> enemies = new List<Enemies>();
+enemies = JsonSerializer.Deserialize<List<Enemies>>(EnemiesJson);
 
 Console.Clear();
 OverWorld NewGame = new OverWorld();
-NewGame.StartGame();
+NewGame.StartGame(enemies);

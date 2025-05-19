@@ -10,9 +10,11 @@ namespace text_adventer_rouge_like.models
     public class OverWorld
     {
         public bool IsAlive { get; set; }
-        public void StartGame()
+        public List<Enemies> Enemies { get; set; } = new List<Enemies>();
+        public void StartGame(List<Enemies> enemies)
         {
             Player player1 = new Player();
+            this.Enemies = enemies;
             player1.SetName();
             player1.ClassSelector();
             player1.SetHardMode();
@@ -21,7 +23,7 @@ namespace text_adventer_rouge_like.models
         }
 
         //this is the main gameplay loop. it handles movement special commands, stuff like that.
-        // basicly if it is somthing that happens in the game its probably here.
+        // basicly if it is something that happens in the game its probably here.
 
         public void RunGame(Player player)
         {
@@ -40,114 +42,105 @@ namespace text_adventer_rouge_like.models
                 Random RandomDeath = new Random();
                 Random RandomIncounter = new Random();
 
-                if (keyInfo.Key == ConsoleKey.H)
+                switch (keyInfo.Key)
                 {
-                    Console.Clear();
-                    Console.WriteLine("I = Inventory \nTab = Player stats \nArrow Keys = player movement \n...");
-                }
-
-                if (keyInfo.Key == ConsoleKey.I)
-                {
-                    Console.Clear();
-                    player.VeiwInventory();
-                }
-
-                if (keyInfo.Key == ConsoleKey.Tab)
-                {
-                    Console.Clear();
-                    Console.WriteLine(player.ToString());
-                }
-
-                if (keyInfo.Key == ConsoleKey.Escape)
-                {
-                    Console.Clear();
-                    Console.WriteLine("are you sure you want to leave? you will lose all progress. y?");
-                    ConsoleKeyInfo keyinfo = Console.ReadKey(intercept: true);
-                    if ( keyinfo.Key == ConsoleKey.Y)
-                    {
-                        EndGame(false);
-                    }
-                }
-
-                if (keyInfo.Key == ConsoleKey.UpArrow)
-                {
-                    Console.Clear();
-                    if (player.HardMode)
-                    {
-                        if (RandomDeath.Next(1, 2000) == 7)
+                    case ConsoleKey.Escape:
+                        Console.Clear();
+                        Console.WriteLine("are you sure you want to leave? you will lose all progress. y?");
+                        ConsoleKeyInfo keyinfo = Console.ReadKey(intercept: true);
+                        if (keyinfo.Key == ConsoleKey.Y)
                         {
-                            Console.WriteLine("today is your unlucky day, \n i'll see you next time");
-                            player.HitPoints = 0;
+                            EndGame(false);
                         }
-                    }
-                    player.MoveUp();
-                    if (player.YPosition <= -map.Hight - 1)
-                    {
-                        Console.WriteLine("You can not move in that direction");
-                        player.MoveDown();
-                    }
-                    map.GennerateMap(player);
-                }
-
-                if (keyInfo.Key == ConsoleKey.DownArrow)
-                {
-                    Console.Clear();
-
-                    if (player.HardMode)
-                    {
-                        if (RandomDeath.Next(1, 2000) == 7)
+                        break;
+                    case ConsoleKey.H:
+                        Console.Clear();
+                        Console.WriteLine("I = Inventory \nTab = Player stats \nArrow Keys = player movement \n...");
+                        break;
+                    case ConsoleKey.I:
+                        Console.Clear();
+                        player.VeiwInventory();
+                        break;
+                    case ConsoleKey.Tab:
+                        Console.Clear();
+                        Console.WriteLine(player.ToString());
+                        break;
+                    case ConsoleKey.UpArrow:
+                        Console.Clear();
+                        if (player.HardMode)
                         {
-                            Console.WriteLine("today is your unlucky day, \n i'll see you next time");
-                            player.HitPoints = 0;
+                            if (RandomDeath.Next(1, 2000) == 7)
+                            {
+                                Console.WriteLine("today is your unlucky day, \n see you next time");
+                                player.HitPoints = 0;
+                            }
                         }
-                    }
-                    player.MoveDown();
-                    if (player.YPosition >= map.Hight + 1)
-                    {
-                        Console.WriteLine("You can not move in that direction");
                         player.MoveUp();
-                    }
-                    map.GennerateMap(player);
-                }
-
-                if (keyInfo.Key == ConsoleKey.RightArrow)
-                {
-                    Console.Clear();
-                    if (player.HardMode)
-                    {
-                        if (RandomDeath.Next(1, 2000) == 7)
+                        this.Combat(player, RandomIncounter);
+                        if (player.YPosition <= -map.Hight - 1)
                         {
-                            Console.WriteLine("today is your unlucky day, \n i'll see you next time");
-                            player.HitPoints = 0;
+                            Console.WriteLine("You can not move in that direction");
+                            player.MoveDown();
                         }
-                    }
-                    player.MoveRight();
-                    if (player.XPosition >= map.Width + 1)
-                    {
-                        Console.WriteLine("You can not move in that direction");
-                        player.MoveLeft();
-                    }
-                    map.GennerateMap(player);
-                }
-
-                if (keyInfo.Key == ConsoleKey.LeftArrow)
-                {
-                    Console.Clear();
-                    if (player.HardMode)
-                    {
-                        if (RandomDeath.Next(1, 2000) == 7)
+                        map.GennerateMap(player);
+                        break;
+                    case ConsoleKey.DownArrow:
+                        Console.Clear();
+                        if (player.HardMode)
                         {
-                            Console.WriteLine("today is your unlucky day, \n i'll see you next time");
-                            player.HitPoints = 0;
+                            if (RandomDeath.Next(1, 2000) == 7)
+                            {
+                                Console.WriteLine("today is your unlucky day, \n see you next time");
+                                player.HitPoints = 0;
+                            }
                         }
-                    }
-                    player.MoveLeft();
-                    if (player.XPosition <= -map.Width - 1)
-                    {
-                        Console.WriteLine("You can not move in that direction");
+                        player.MoveDown();
+                        this.Combat(player, RandomIncounter);
+                        if (player.YPosition >= map.Hight + 1)
+                        {
+                            Console.WriteLine("You can not move in that direction");
+                            player.MoveUp();
+                        }
+                        map.GennerateMap(player);
+                        break;
+                    case ConsoleKey.RightArrow:
+                        Console.Clear();
+                        if (player.HardMode)
+                        {
+                            if (RandomDeath.Next(1, 2000) == 7)
+                            {
+                                Console.WriteLine("today is your unlucky day, \n see you next time");
+                                player.HitPoints = 0;
+                            }
+                        }
                         player.MoveRight();
-                    }
-                    map.GennerateMap(player);
+                        this.Combat(player, RandomIncounter);
+                        if (player.XPosition >= map.Width + 1)
+                        {
+                            Console.WriteLine("You can not move in that direction");
+                            player.MoveLeft();
+                        }
+                        map.GennerateMap(player);
+                        break;
+                    case ConsoleKey.LeftArrow:
+                        Console.Clear();
+                        if (player.HardMode)
+                        {
+                            if (RandomDeath.Next(1, 2000) == 7)
+                            {
+                                Console.WriteLine("today is your unlucky day, \n see you next time");
+                                player.HitPoints = 0;
+                            }
+                        }
+                        player.MoveLeft();
+                        this.Combat(player, RandomIncounter);
+                        if (player.XPosition <= -map.Width - 1)
+                        {
+                            Console.WriteLine("You can not move in that direction");
+                            player.MoveRight();
+                        }
+                        map.GennerateMap(player);
+                        break;
                 }
 
 
@@ -159,46 +152,52 @@ namespace text_adventer_rouge_like.models
             }
         }
 
-        public void Combat(Player player)
+        public void Combat(Player player, Random Random)
         {
-            Enemies enemie = new Enemies();
-            bool InCombat = true;
-            while (InCombat)
+            if (Random.Next(1, 10) == 7)
             {
-                Console.Clear();
-                Console.WriteLine($"you are in combat with {enemie.Name}!");
-                ConsoleKeyInfo keyInfo = Console.ReadKey(intercept: true);
-
-                if (keyInfo.Key == ConsoleKey.E)
+                Console.WriteLine("You have encountered a wild enemy!!");
+                Random random = new Random();
+                Enemies enemie = new Enemies();
+                foreach (Enemies enemy in this.Enemies)
                 {
-                    Console.Clear();
-                    enemie.HP -= player.Damage;
-                    Console.WriteLine($"you hit the {enemie.Name}");
-
+                    if (random.Next(1, 3) == enemy.Id)
+                    {
+                        enemie = enemy;
+                    }
                 }
-
-                if (keyInfo.Key == ConsoleKey.Tab)
+                bool InCombat = true;
+                while (InCombat)
                 {
-                    Console.Clear();
-                    Console.WriteLine(player.ToString());
-                }
-
-                if (keyInfo.Key == ConsoleKey.I)
-                {
-                    Console.Clear();
-                    player.VeiwInventory();
-                }
-                
-                if (keyInfo.Key == ConsoleKey.H)
-                {
-                    Console.Clear();
-                    Console.WriteLine("I = Inventory \nTab = Player stats \n...");
-                }
-
-                if (enemie.HP <= 0)
-                {
-                    Console.WriteLine($"yay you did it!! The {enemie.Name} has fallen!");
-                    InCombat = false;
+                    Console.WriteLine($"you are in combat with {enemie.Name}!");
+                    ConsoleKeyInfo keyInfo = Console.ReadKey(intercept: true);
+                    switch (keyInfo.Key)
+                    {
+                        case ConsoleKey.E:
+                            Console.Clear();
+                            Console.WriteLine("You have attacked the enemy!");
+                            Console.WriteLine($"You have done {player.Damage} damage to the {enemie.Name}");
+                            enemie.HP -= player.Damage;
+                            break;
+                        case ConsoleKey.Tab:
+                            Console.Clear();
+                            Console.WriteLine(player.ToString());
+                            break;
+                        case ConsoleKey.I:
+                            Console.Clear();
+                            player.VeiwInventory();
+                            break;
+                        case ConsoleKey.H:
+                            Console.Clear();
+                            Console.WriteLine("I = Inventory \nTab = Player stats \n...");
+                            break;
+                    }
+                    Console.WriteLine(enemie.HP);
+                    if (enemie.HP <= 0)
+                    {
+                        Console.WriteLine($"yay you did it!! The {enemie.Name} has fallen!");
+                        InCombat = false;
+                    }
                 }
             }
 
@@ -221,7 +220,7 @@ namespace text_adventer_rouge_like.models
                     if (keyinfo.Key == ConsoleKey.Y)
                     {
                         Console.Clear();
-                        this.StartGame();
+                        this.StartGame(this.Enemies);
                         StayOrLeave = true;
                     }
                     else if (keyinfo.Key == ConsoleKey.N)
@@ -231,7 +230,7 @@ namespace text_adventer_rouge_like.models
                     }
                     else
                     {
-                        Console.WriteLine("I dont understand please try agin or close the game.");
+                        Console.WriteLine("I don't understand please try again or close the game.");
                     }
                 }
             }
