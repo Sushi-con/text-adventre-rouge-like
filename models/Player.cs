@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,6 +27,10 @@ namespace text_adventer_rouge_like.models
         public int XPosition { get; set; } = 0;
         public int YPosition { get; set; } = 0;
         public bool HardMode { get; set; }
+        public Spell SpellSlot1 { get; set; } = new Spell();
+        public Spell SpellSlot2 { get; set; } = new Spell();
+        public Spell SpellSlot3 { get; set; } = new Spell();
+
 
         // Methods===============================================
 
@@ -41,7 +47,16 @@ namespace text_adventer_rouge_like.models
 
         public override string ToString()
         {
-            return $"Name: {this.Name}\n Class: {this.Class}\n Dammage: {this.Damage}\n Armor: {this.Armor}\n HP: {this.HitPoints}\n Levle: {this.levle}\n Points: {this.Points}/{this.PointCap}";
+            return $"Name: {this.Name}\n" +
+                $"Class: {this.Class}\n" +
+                $"Dammage: {this.Damage}\n" +
+                $"Armor: {this.Armor}\n" +
+                $"HP: {this.HitPoints}\n" +
+                $"Spell 1: {this.SpellSlot1.ToString()}\n" +
+                $"Spell 2: {this.SpellSlot2.ToString()}\n" +
+                $"Spell 3: {this.SpellSlot3.ToString()}\n" +
+                $"Levle: {this.levle}\n" +
+                $"Points: {this.Points}/{this.PointCap}";
         }
 
         //this is to set the temp stats equal to the base stats
@@ -54,10 +69,29 @@ namespace text_adventer_rouge_like.models
             this.HitPoints = this.DefHitPoints;
         }
 
+        public void SetSpell(Spell spell)
+        {
+            if (this.SpellSlot1.Name == null)
+            {
+                this.SpellSlot1 = spell;
+                return;
+            }
+            else if (this.SpellSlot2.Name == null)
+            {
+                this.SpellSlot2 = spell;
+                return;
+            }
+            else if (this.SpellSlot3.Name == null)
+            {
+                this.SpellSlot3 = spell;
+                return;
+            }
+        }
+
         // this method is made for the perpose of having multiple different roles the charicter can play.
         // there are four classes that you can choose from when the games starts after you enter your name.
 
-        public void ClassSelector()
+        public void ClassSelector(List<Spell> spells)
         {
             Console.Clear();
             var Class = false;
@@ -86,16 +120,17 @@ namespace text_adventer_rouge_like.models
                 else if (keyinfo.Key == ConsoleKey.D3)
                 {
                     this.Class = "Healer";
-                    this.DefDamage = 15;
+                    this.DefDamage = 20;
                     this.DefArmor = 20;
                     this.DefHitPoints = 100;
+                    this.SpellSlot1 = spells.Where(spells => spells.Tag == "healing").FirstOrDefault();
                     this.SetBaseStats();
                     Class = true;
                 }
                 else if (keyinfo.Key == ConsoleKey.D4)
                 {
                     this.Class = "Mage";
-                    this.DefDamage = 30;
+                    this.DefDamage = 10;
                     this.DefArmor = 10;
                     this.DefHitPoints = 85;
                     this.SetBaseStats();

@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "name": "Delayed Gratitude",
+        "description": "heals you for 10% of your hp over 5 turns",
+        "tag": "healing"
+    },
+    {
+        "id": 2,
+        "name": "Sacred Ignition",
+        "description": "deal 10% enemies max hp for 8 turns",
+        "tag": "damage"
+    },
+    {
+        "id": 3,
+        "name": "Loving Touch",
+        "description": "2 turns after use heal for 30%",
+        "tag": "healing"
+    },
+    {
+        "id": 4,
+        "name": "Affectionat Kiss",
+        "description": "heal for 25% hp on use",
+        "tag": "healing"
+    },
+    {
+        "id": 5,
+        "name": "Concuss",
+        "description": "stuns enemie for 2",
+        "tag": "damage"
+    },
+    {
+        "id": 6,
+        "name": "Enhance Edge",
+        "description": "adds +20 to base damage till end of combat",
+        "tag": "damage"
+    }
+]

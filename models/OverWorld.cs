@@ -11,12 +11,15 @@ namespace text_adventer_rouge_like.models
     {
         public bool IsAlive { get; set; }
         public List<Enemies> Enemies { get; set; } = new List<Enemies>();
-        public void StartGame(List<Enemies> enemies)
+        public List<Spell> Spells { get; set; } = new List<Spell>();
+        public List<Item> Items { get; set; } = new List<Item>();
+        public void StartGame(List<Enemies> enemies, List<Spell> spells, List<Item> items)
         {
             Player player1 = new Player();
             this.Enemies = enemies;
+            this.Spells = spells;
             player1.SetName();
-            player1.ClassSelector();
+            player1.ClassSelector(this.Spells);
             player1.SetHardMode();
             this.IsAlive = true;
             this.RunGame(player1);
@@ -44,6 +47,8 @@ namespace text_adventer_rouge_like.models
 
                 switch (keyInfo.Key)
                 {
+                    //Exit game
+
                     case ConsoleKey.Escape:
                         Console.Clear();
                         Console.WriteLine("are you sure you want to leave? you will lose all progress. y?");
@@ -53,18 +58,32 @@ namespace text_adventer_rouge_like.models
                             EndGame(false);
                         }
                         break;
+
+                    //Help menu
+
                     case ConsoleKey.H:
                         Console.Clear();
-                        Console.WriteLine("I = Inventory \nTab = Player stats \nArrow Keys = player movement \n...");
+                        Console.WriteLine("I = Inventory \n" +
+                            "TAB = Player stats \n" +
+                            "Arrow Keys = player movement \n...");
                         break;
+
+                    //Inventory
+
                     case ConsoleKey.I:
                         Console.Clear();
                         player.VeiwInventory();
                         break;
+
+                    //Stat sheet
+
                     case ConsoleKey.Tab:
                         Console.Clear();
                         Console.WriteLine(player.ToString());
                         break;
+
+                    //Move up
+
                     case ConsoleKey.UpArrow:
                         Console.Clear();
                         if (player.HardMode)
@@ -84,6 +103,9 @@ namespace text_adventer_rouge_like.models
                         }
                         map.GennerateMap(player);
                         break;
+
+                    //Move down
+
                     case ConsoleKey.DownArrow:
                         Console.Clear();
                         if (player.HardMode)
@@ -103,6 +125,9 @@ namespace text_adventer_rouge_like.models
                         }
                         map.GennerateMap(player);
                         break;
+
+                    //move right
+
                     case ConsoleKey.RightArrow:
                         Console.Clear();
                         if (player.HardMode)
@@ -122,6 +147,9 @@ namespace text_adventer_rouge_like.models
                         }
                         map.GennerateMap(player);
                         break;
+
+                    //move left
+
                     case ConsoleKey.LeftArrow:
                         Console.Clear();
                         if (player.HardMode)
@@ -142,8 +170,6 @@ namespace text_adventer_rouge_like.models
                         map.GennerateMap(player);
                         break;
                 }
-
-
 
                 if (player.HitPoints <= 0)
                 {
@@ -189,7 +215,27 @@ namespace text_adventer_rouge_like.models
                             break;
                         case ConsoleKey.H:
                             Console.Clear();
-                            Console.WriteLine("I = Inventory \nTab = Player stats \n...");
+                            Console.WriteLine($"E = attack\n" +
+                                $"TAB = stats\n" +
+                                $"I = inventory\n" +
+                                $"1 = {player.SpellSlot1}\n" +
+                                $"2 = {player.SpellSlot2}\n" +
+                                $"3 = {player.SpellSlot3}");
+                            break;
+                        case ConsoleKey.D1:
+                            Console.Clear();
+                            Console.WriteLine($"You have used {player.SpellSlot1}!");
+                            
+                            break;
+                        case ConsoleKey.D2:
+                            Console.Clear();
+                            Console.WriteLine($"You have used {player.SpellSlot2}!");
+
+                            break;
+                        case ConsoleKey.D3:
+                            Console.Clear();
+                            Console.WriteLine($"You have used {player.SpellSlot3}!");
+
                             break;
                     }
                     Console.WriteLine(enemie.HP);
@@ -220,7 +266,7 @@ namespace text_adventer_rouge_like.models
                     if (keyinfo.Key == ConsoleKey.Y)
                     {
                         Console.Clear();
-                        this.StartGame(this.Enemies);
+                        this.StartGame(this.Enemies, this.Spells, this.Items);
                         StayOrLeave = true;
                     }
                     else if (keyinfo.Key == ConsoleKey.N)
