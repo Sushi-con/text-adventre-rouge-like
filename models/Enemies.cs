@@ -17,10 +17,17 @@ namespace text_adventer_rouge_like.models
         public int Dammage { get; set; }
         [JsonPropertyName("hp")]
         public int HP { get; set; }
+        [JsonPropertyName("hc")]
+        public int HC { get; set; }
+        public int BaseHP { get; set; }
 
         public override string ToString()
         {
             return $"Id: {this.Id}\nName: {this.Name}\nDammage: {this.Dammage}\nHP: {this.HP}";
+        }
+        public void setBase()
+        {
+            this.BaseHP = this.HP;
         }
     }
 }

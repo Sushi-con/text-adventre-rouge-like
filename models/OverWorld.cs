@@ -95,7 +95,10 @@ namespace text_adventer_rouge_like.models
                             }
                         }
                         player.MoveUp();
-                        this.Combat(player, RandomIncounter);
+                        if (map.ChechPlayerPosition(player) == "")
+                        {
+                            this.Combat(player, RandomIncounter);
+                        }
                         if (player.YPosition <= -map.Hight - 1)
                         {
                             Console.WriteLine("You can not move in that direction");
@@ -117,7 +120,10 @@ namespace text_adventer_rouge_like.models
                             }
                         }
                         player.MoveDown();
-                        this.Combat(player, RandomIncounter);
+                        if (map.ChechPlayerPosition(player) == "")
+                        {
+                            this.Combat(player, RandomIncounter);
+                        }
                         if (player.YPosition >= map.Hight + 1)
                         {
                             Console.WriteLine("You can not move in that direction");
@@ -139,7 +145,10 @@ namespace text_adventer_rouge_like.models
                             }
                         }
                         player.MoveRight();
-                        this.Combat(player, RandomIncounter);
+                        if (map.ChechPlayerPosition(player) == "")
+                        {
+                            this.Combat(player, RandomIncounter);
+                        }
                         if (player.XPosition >= map.Width + 1)
                         {
                             Console.WriteLine("You can not move in that direction");
@@ -161,7 +170,10 @@ namespace text_adventer_rouge_like.models
                             }
                         }
                         player.MoveLeft();
-                        this.Combat(player, RandomIncounter);
+                        if (map.ChechPlayerPosition(player) == "")
+                        {
+                            this.Combat(player, RandomIncounter);
+                        }
                         if (player.XPosition <= -map.Width - 1)
                         {
                             Console.WriteLine("You can not move in that direction");
@@ -183,13 +195,13 @@ namespace text_adventer_rouge_like.models
             if (Random.Next(1, 10) == 7)
             {
                 Console.WriteLine("You have encountered a wild enemy!!");
-                Random random = new Random();
                 Enemies enemie = new Enemies();
-                foreach (Enemies enemy in this.Enemies)
+                int random = Random.Next(1, 4);
+                foreach (Enemies enemieObj in this.Enemies)
                 {
-                    if (random.Next(1, 3) == enemy.Id)
+                    if (random == enemieObj.Id)
                     {
-                        enemie = enemy;
+                        enemie = enemieObj;
                     }
                 }
                 bool InCombat = true;
@@ -201,9 +213,16 @@ namespace text_adventer_rouge_like.models
                     {
                         case ConsoleKey.E:
                             Console.Clear();
-                            Console.WriteLine("You have attacked the enemy!");
-                            Console.WriteLine($"You have done {player.Damage} damage to the {enemie.Name}");
-                            enemie.HP -= player.Damage;
+                            Console.WriteLine("You have attacked the enemy!...");
+                            if(Random.Next(1, 100) <= player.HitChance)
+                            {
+                                Console.WriteLine($"You have done {player.Damage} damage to the {enemie.Name}");
+                                enemie.HP -= player.Damage;
+                            }
+                            else
+                            {
+                                Console.WriteLine("but you missed");
+                            }
                             break;
                         case ConsoleKey.Tab:
                             Console.Clear();
@@ -238,11 +257,27 @@ namespace text_adventer_rouge_like.models
 
                             break;
                     }
-                    Console.WriteLine(enemie.HP);
+                    if(Random.Next(1, 100) <= enemie.HC)
+                    {
+                        Console.WriteLine($"the enemie hits you for {enemie.Dammage}");
+                        player.HitPoints -= enemie.Dammage;
+                    }
+                    else
+                    {
+                        Console.WriteLine("they missed");
+                    }
+                    Console.WriteLine($"enemie HP: { enemie.HP}");
+                    Console.WriteLine($"your HP: {player.HitPoints}");
                     if (enemie.HP <= 0)
                     {
                         Console.WriteLine($"yay you did it!! The {enemie.Name} has fallen!");
+                        enemie.HP = enemie.BaseHP;
                         InCombat = false;
+                    }
+                    if(player.HitPoints <= 0)
+                    {
+                        this.EndGame(true);
+                        break;
                     }
                 }
             }
@@ -273,6 +308,7 @@ namespace text_adventer_rouge_like.models
                     {
                         Console.WriteLine("See you next time!! :)");
                         StayOrLeave = true;
+                        break;
                     }
                     else
                     {

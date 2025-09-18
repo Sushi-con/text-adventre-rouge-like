@@ -15,7 +15,8 @@ namespace text_adventer_rouge_like.models
         public int YPosition { get; set; } = 0;
         public int XExitPosition { get; set; }
         public int YExitPosition { get; set; }
-        private  List<Position> Positions { get; set; } = new List<Position>();
+        public  List<Position> Positions { get; set; } = new List<Position>();
+        public List<Position> ShopPositions { get; set; } = new List<Position>();
         public  string MapString { get; set; }
 
         //this method is so the map can keep track of the players position.
@@ -26,6 +27,21 @@ namespace text_adventer_rouge_like.models
             YPosition = player.YPosition;
         }
 
+        public string ChechPlayerPosition(Player player)
+        {
+            foreach (var position in this.ShopPositions)
+            {
+                if (player.XPosition == position.XPosition && player.YPosition == position.YPosition)
+                { return "shop"; }
+            }
+            foreach (var position in this.Positions)
+            {
+                if(player.XPosition == position.XPosition && player.YPosition == position.YPosition) 
+                { return "exp"; }
+            }
+            return "";
+        }
+
         //this will randomly gennerat the map size
 
         public void GennerateSize()
@@ -33,6 +49,30 @@ namespace text_adventer_rouge_like.models
             Random MapSize = new Random();
             this.Hight = MapSize.Next(4, 9);
             this.Width = MapSize.Next(4, 9);
+            this.GenerateShops();
+        }
+
+        public bool CheckYPosition(Position position, int Y)
+        {
+            if (position.YPosition == Y) { return true; }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool CheckPosition(Position position, int Y, int X)
+        {
+            if (position.XPosition == X && position.YPosition == Y) { return true; }
+            else { return false; }
+        }
+
+        public void GenerateShops()
+        {
+            Random random = new Random();
+            this.ShopPositions.Add(new Position { YPosition = random.Next(-this.Hight, this.Hight), XPosition = random.Next(-this.Width, this.Width) });
+            this.ShopPositions.Add(new Position { YPosition = random.Next(-this.Hight, this.Hight), XPosition = random.Next(-this.Width, this.Width) });
+            this.ShopPositions.Add(new Position { YPosition = random.Next(-this.Hight, this.Hight), XPosition = random.Next(-this.Width, this.Width) });
         }
 
         //this will actualy draw out the map row by row.
@@ -45,6 +85,7 @@ namespace text_adventer_rouge_like.models
             SetPosition(player);
             string MapMark = "[ ]";
             string Explored = "[X]";
+            string Shop = "[S]";
             string PlayerMarker = "[O]";
             string map = "";
 
@@ -52,28 +93,142 @@ namespace text_adventer_rouge_like.models
             
 
 
-            
+            // loop thorugh the y axies
             for (int i = -this.Hight; i < this.Hight + 1; i++)
             {
-                if (this.Positions.Where(Position => Position.YPosition == i).Any() && this.YPosition == i)
+                //checks if thire are explored tiles on this 
+                if (this.ShopPositions.
+                    Where(p => CheckYPosition(p, i)).
+                    Any() &&
+                    this.YPosition == i && 
+                    this.Positions.
+                    Where(p => CheckYPosition(p, i)).
+                    Any())
                 {
                     for (int j = -this.Width; j < this.Width + 1; j++)
                     {
-                        if (j == this.XPosition && this.Positions.Where(Position => Position.XPosition == j).Any() && this.Positions.Where(Position => Position.YPosition == i).Any()) { map += PlayerMarker; }
-
+                        // checks if the player is on the x axies and prioritizes the player marker over the explored marker
+                        if (j == this.XPosition && 
+                            this.Positions.
+                            Where(p => CheckPosition(p, i, j)).
+                            Any() &&
+                            this.ShopPositions.
+                            Where(p => CheckPosition(p, i, j)).
+                            Any())
+                            { map += PlayerMarker; }
+                        // checks if the player is on the x axies
                         else if (j == this.XPosition) { map += PlayerMarker; }
+                        else if (this.ShopPositions.
+                            Where(p => CheckPosition(p, i, j)).
+                            Any() &&
+                            this.Positions.
+                            Where(p => CheckPosition(p, i, j)).
+                            Any())
+                            { map += Shop; }
+                        else if (this.ShopPositions.
+                            Where(p => CheckPosition(p, i, j)).
+                            Any()) 
+                            { map += Shop; }
+                        // checks if the tile is explored 
+                        else if (this.Positions.
+                            Where(p => CheckPosition(p, i, j)).
+                            Any()) 
+                            { map += Explored; }
 
-                        else if (this.Positions.Where(Position => Position.XPosition == j && Position.YPosition == i).Any()) { map += Explored; }
+                        else { map += MapMark; }
+                    }
+                }
+                else if (this.ShopPositions.
+                    Where(p => CheckYPosition(p, i)).
+                    Any() && 
+                    this.YPosition == i)
+                {
+                    for (int j = -this.Width; j < this.Width + 1; j++)
+                    {
+                        // checks if the player is on the x axies and prioritizes the player marker over the explored marker
+                        if (j == this.XPosition &&
+                            this.ShopPositions.
+                            Where(p => CheckPosition(p, i, j)).
+                            Any()) { map += PlayerMarker; }
+                        // checks if the player is on the x axies
+                        else if (j == this.XPosition) { map += PlayerMarker; }
+                        // checks if the tile is explored 
+                        else if (this.ShopPositions.
+                            Where(p => CheckPosition(p, i, j)).
+                            Any()) { map += Shop; }
+
+                        else { map += MapMark; }
+                    }
+                }
+                else if (this.Positions.
+                    Where(p => CheckYPosition(p, i)).
+                    Any() && this.YPosition == i)
+                {
+                    // loops thorugh the x axies
+                    for (int j = -this.Width; j < this.Width + 1; j++)
+                    {
+                        // checks if the player is on the x axies and prioritizes the player marker over the explored marker
+                        if (j == this.XPosition &&
+                            this.Positions.
+                            Where(p => CheckPosition(p, i, j)).
+                            Any()) { map += PlayerMarker; }
+                        // checks if the player is on the x axies
+                        else if (j == this.XPosition) { map += PlayerMarker; }
+                        // checks if the tile is explored 
+                        else if (this.Positions.
+                            Where(p => CheckPosition(p, i, j)).
+                            Any()) { map += Explored; }
 
                         else { map += MapMark; }
                     }
                 }
 
-                else if (this.Positions.Where(Position => Position.YPosition == i).Any())
+                else if (this.ShopPositions.
+                    Where(p => CheckYPosition(p, i)).
+                    Any() && 
+                    this.Positions.
+                    Where(p => CheckYPosition(p, i)).
+                    Any())
                 {
                     for (int j = -this.Width; j < this.Width + 1; j++)
                     {
-                        if (this.Positions.Where(Position => Position.XPosition == j && Position.YPosition == i).Any() && this.Positions.Where(Position => Position.YPosition == i).Any()) { map += Explored; }
+                        // checks if the player is on the x axies and prioritizes the player marker over the explored marker
+                        if (this.ShopPositions.
+                            Where(p => CheckPosition(p, i, j)).
+                            Any() &&
+                            this.Positions.
+                            Where(p => CheckPosition(p, i, j)).
+                            Any()) { map += Shop; }
+                        // checks if the player is on the x axies
+                        else if (this.ShopPositions.Where(p => CheckPosition(p, i, j)).Any()) { map += Shop; }
+                        // checks if the tile is explored 
+                        else if (this.Positions.
+                            Where(p => CheckPosition(p, i, j)).
+                            Any()) { map += Explored; }
+
+                        else { map += MapMark; }
+                    }
+                }
+
+                else if (this.ShopPositions.Where(position => CheckYPosition(position, i)).Any())
+                {
+                    for (int j = -this.Width; j < this.Width + 1; j++)
+                    {
+                        if (this.ShopPositions.
+                            Where(p => CheckPosition(p, i, j)).
+                            Any()) { map += Shop; }
+
+                        else { map += MapMark; }
+                    }
+                }
+
+                else if (this.Positions.Where(p => CheckYPosition(p, i)).Any())
+                {
+                    for (int j = -this.Width; j < this.Width + 1; j++)
+                    {
+                        if (this.Positions.
+                            Where(p => CheckPosition(p, i, j)).
+                            Any()) { map += Explored; }
 
                         else { map += MapMark; }
                     }

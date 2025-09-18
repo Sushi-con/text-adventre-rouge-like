@@ -23,6 +23,8 @@ namespace text_adventer_rouge_like.models
         private int DefArmor { get; set; }
         public int HitPoints { get; set; }
         private int DefHitPoints { get; set; }
+        public int HitChance { get; set; }
+        private int DefHitChance { get; set; }
         private List<Item> Items { get; set; } = new List<Item>();
         public int XPosition { get; set; } = 0;
         public int YPosition { get; set; } = 0;
@@ -52,6 +54,7 @@ namespace text_adventer_rouge_like.models
                 $"Dammage: {this.Damage}\n" +
                 $"Armor: {this.Armor}\n" +
                 $"HP: {this.HitPoints}\n" +
+                $"HC: {this.HitChance}%\n" +
                 $"Spell 1: {this.SpellSlot1.ToString()}\n" +
                 $"Spell 2: {this.SpellSlot2.ToString()}\n" +
                 $"Spell 3: {this.SpellSlot3.ToString()}\n" +
@@ -67,6 +70,7 @@ namespace text_adventer_rouge_like.models
             this.Damage = this.DefDamage;
             this.Armor = this.DefArmor;
             this.HitPoints = this.DefHitPoints;
+            this.HitChance = this.DefHitChance;
         }
 
         public void SetSpell(Spell spell)
@@ -85,6 +89,11 @@ namespace text_adventer_rouge_like.models
             {
                 this.SpellSlot3 = spell;
                 return;
+            }
+            else
+            {
+                Console.WriteLine("you have max spells");
+                // TODO: add the ability to remove and replace spells
             }
         }
 
@@ -105,6 +114,7 @@ namespace text_adventer_rouge_like.models
                     this.DefDamage = 25;
                     this.DefArmor = 25;
                     this.DefHitPoints = 150;
+                    this.DefHitChance = 45;
                     this.SetBaseStats();
                     Class = true;
                 }
@@ -114,6 +124,7 @@ namespace text_adventer_rouge_like.models
                     this.DefDamage = 18;
                     this.DefArmor = 50;
                     this.DefHitPoints = 200;
+                    this.DefHitChance = 50;
                     this.SetBaseStats();
                     Class = true;
                 }
@@ -123,6 +134,7 @@ namespace text_adventer_rouge_like.models
                     this.DefDamage = 20;
                     this.DefArmor = 20;
                     this.DefHitPoints = 100;
+                    this.DefHitChance = 30;
                     this.SpellSlot1 = spells.Where(spells => spells.Tag == "healing").FirstOrDefault();
                     this.SetBaseStats();
                     Class = true;
@@ -133,6 +145,7 @@ namespace text_adventer_rouge_like.models
                     this.DefDamage = 10;
                     this.DefArmor = 10;
                     this.DefHitPoints = 85;
+                    this.DefHitChance = 55;
                     this.SetBaseStats();
                     Class = true;
                 }
@@ -183,6 +196,11 @@ namespace text_adventer_rouge_like.models
                 this.Points -= this.PointCap;
                 this.levle++;
                 this.PointCap += this.PointCap * 1.5;
+            }
+            if(this.Armor > 99)
+            {
+                this.Armor = 99;
+                Console.WriteLine("armor cap is 99");
             }
         }
 

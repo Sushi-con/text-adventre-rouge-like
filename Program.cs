@@ -13,6 +13,10 @@ string pathToEnemesJson = "./enemes.json";
 string EnemiesJson = File.ReadAllText(pathToEnemesJson);
 List<Enemies> enemies = new List<Enemies>();
 enemies = JsonSerializer.Deserialize<List<Enemies>>(EnemiesJson);
+foreach (Enemies enemie in enemies)
+{
+    enemie.setBase();
+}
 
 string pathToSpellsJson = "./spells.json";
 string SpellsJson = File.ReadAllText(pathToSpellsJson);
@@ -22,3 +26,4 @@ spells = JsonSerializer.Deserialize<List<Spell>>(SpellsJson);
 Console.Clear();
 OverWorld NewGame = new OverWorld();
 NewGame.StartGame(enemies, spells, items);
+
