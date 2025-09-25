@@ -22,13 +22,14 @@ namespace text_adventer_rouge_like.models
             player1.ClassSelector(this.Spells);
             player1.SetHardMode();
             this.IsAlive = true;
-            this.RunGame(player1);
+            Store Store = new Store(items);
+            this.RunGame(player1, Store);
         }
 
         //this is the main gameplay loop. it handles movement special commands, stuff like that.
         // basicly if it is something that happens in the game its probably here.
 
-        public void RunGame(Player player)
+        public void RunGame(Player player, Store Store)
         {
             Map map = new Map();
             map.GennerateSize();
@@ -98,6 +99,9 @@ namespace text_adventer_rouge_like.models
                         if (map.ChechPlayerPosition(player) == "")
                         {
                             this.Combat(player, RandomIncounter);
+                        }else if (map.ChechPlayerPosition(player) == "shop")
+                        {
+                            this.Shop(Store, player);
                         }
                         if (player.YPosition <= -map.Hight - 1)
                         {
@@ -124,6 +128,10 @@ namespace text_adventer_rouge_like.models
                         {
                             this.Combat(player, RandomIncounter);
                         }
+                        else if (map.ChechPlayerPosition(player) == "shop")
+                        {
+                            this.Shop(Store, player);
+                        }
                         if (player.YPosition >= map.Hight + 1)
                         {
                             Console.WriteLine("You can not move in that direction");
@@ -149,6 +157,10 @@ namespace text_adventer_rouge_like.models
                         {
                             this.Combat(player, RandomIncounter);
                         }
+                        else if (map.ChechPlayerPosition(player) == "shop")
+                        {
+                            this.Shop(Store, player);
+                        }
                         if (player.XPosition >= map.Width + 1)
                         {
                             Console.WriteLine("You can not move in that direction");
@@ -173,6 +185,10 @@ namespace text_adventer_rouge_like.models
                         if (map.ChechPlayerPosition(player) == "")
                         {
                             this.Combat(player, RandomIncounter);
+                        }
+                        else if (map.ChechPlayerPosition(player) == "shop")
+                        {
+                            this.Shop(Store, player);
                         }
                         if (player.XPosition <= -map.Width - 1)
                         {
@@ -272,6 +288,8 @@ namespace text_adventer_rouge_like.models
                     {
                         Console.WriteLine($"yay you did it!! The {enemie.Name} has fallen!");
                         enemie.HP = enemie.BaseHP;
+                        player.Money += Random.Next(25, 51);
+                        Console.WriteLine("you found some money too!");
                         InCombat = false;
                     }
                     if(player.HitPoints <= 0)
@@ -282,6 +300,68 @@ namespace text_adventer_rouge_like.models
                 }
             }
 
+        }
+
+        //this method will handle everything to do with stores.
+
+        public void Shop(Store Store, Player player)
+        {
+            Store.GenerateStore();
+            bool InStore = true;
+            while (InStore)
+            {
+                Console.Clear();
+                Console.WriteLine("you made it to a shop!");
+                Console.WriteLine(Store.ToString());
+                Console.WriteLine($"Your money: {player.Money}");
+                Console.WriteLine("Please select what you would like to buy with the number Keys or press esc to leave");
+                ConsoleKeyInfo keyInfo = Console.ReadKey(intercept: true);
+                switch (keyInfo.Key)
+                {
+                    case ConsoleKey.D1:
+                        if(player.Money < Store.Item1.Price)
+                        {
+                            Console.WriteLine("you dont have enough money");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Money well spent!");
+                            player.Money -= Store.Item1.Price;
+                            player.AddItem(Store.Item1);
+                        }
+                        break;
+                    case ConsoleKey.D2:
+                        if (player.Money < Store.Item2.Price)
+                        {
+                            Console.WriteLine("you dont have enough money");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Money well spent!");
+                            player.Money -= Store.Item2.Price;
+                            player.AddItem(Store.Item2);
+                        }
+                        break;
+                    case ConsoleKey.D3:
+                        if (player.Money < Store.Item3.Price)
+                        {
+                            Console.WriteLine("you dont have enough money");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Money well spent!");
+                            player.Money -= Store.Item3.Price;
+                            player.AddItem(Store.Item3);
+                        }
+                        break;
+                    case ConsoleKey.Escape:
+                        Console.WriteLine("stop back later if youd like!");
+                        InStore = false;
+                        break;
+                }
+
+
+            }
         }
 
         //this method handles when you end the game... wow couldent tell right

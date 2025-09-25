@@ -71,8 +71,6 @@ namespace text_adventer_rouge_like.models
         {
             Random random = new Random();
             this.ShopPositions.Add(new Position { YPosition = random.Next(-this.Hight, this.Hight), XPosition = random.Next(-this.Width, this.Width) });
-            this.ShopPositions.Add(new Position { YPosition = random.Next(-this.Hight, this.Hight), XPosition = random.Next(-this.Width, this.Width) });
-            this.ShopPositions.Add(new Position { YPosition = random.Next(-this.Hight, this.Hight), XPosition = random.Next(-this.Width, this.Width) });
         }
 
         //this will actualy draw out the map row by row.

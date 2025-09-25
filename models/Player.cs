@@ -17,6 +17,7 @@ namespace text_adventer_rouge_like.models
         public int levle { get; set; } = 1;
         private double Points { get; set; } = 0;
         public double PointCap { get; set; } = 25;
+        public int Money { get; set; } = 0;
         public int Damage { get; set; }
         private int DefDamage { get; set; }
         public int Armor { get; set; }

@@ -20,13 +20,13 @@ namespace text_adventer_rouge_like.models
         [JsonPropertyName("statEffects")]
         public List<string> StatEffects { get; set; } = new List<string>();
         [JsonPropertyName("price")]
-        public decimal Price {  get; set; }
+        public int Price {  get; set; }
         [JsonPropertyName("pointBonus")]
         public int PointBonus { get; set; }
 
         public override string ToString()
         {
-            return $"\n\n{this.Name}: \n Description: {this.Description} Points: {this.PointBonus} \n\n";
+            return $"{this.Name}:\nDescription: {this.Description} Price {this.Price}";
         }
     }
 }
