@@ -3,7 +3,7 @@ using System.Text.Json;
 using text_adventer_rouge_like.models;
 using static System.Net.Mime.MediaTypeNames;
 
-Directory.SetCurrentDirectory("../../../");
+//Directory.SetCurrentDirectory("../../../");
 string pathToItemJson = "./Items.json";
 string Json = await File.ReadAllTextAsync(pathToItemJson);
 List<Item> items = new List<Item>();
