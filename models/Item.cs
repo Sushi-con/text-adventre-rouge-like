@@ -26,7 +26,7 @@ namespace text_adventer_rouge_like.models
 
         public override string ToString()
         {
-            return $"{this.Name}:\nDescription: {this.Description} Price {this.Price}";
+            return $"{this.Name}:\nDescription: {this.Description} \nPrice {this.Price}";
         }
     }
 }
