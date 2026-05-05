@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("text adventer rouge-like")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dc1ccd04048cc1675058a489477843a6e4b1a1a1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+78e0db0f7dfea1ba95edf12a5b73a8a8e7e42f0a")]
 [assembly: System.Reflection.AssemblyProductAttribute("text adventer rouge-like")]
 [assembly: System.Reflection.AssemblyTitleAttribute("text adventer rouge-like")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
