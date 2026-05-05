@@ -28,7 +28,7 @@ namespace text_adventer_rouge_like.models
         }
         public override string ToString()
         {
-            return $"1. {Item1.ToString()}\n2. {Item2.ToString()}\n3. {Item3.ToString()}";
+            return $"\nSlot 1. \n{Item1.ToString()}\n\n=============\n\nSlot 2. \n{Item2.ToString()}\n\n=============\n\nSlot 3. \n{Item3.ToString()}\n\n=============\n";
         }
     }
 }

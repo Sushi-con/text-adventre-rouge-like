@@ -230,6 +230,7 @@ namespace text_adventer_rouge_like.models
                         case ConsoleKey.E:
                             Console.Clear();
                             Console.WriteLine("You have attacked the enemy!...");
+                            Console.WriteLine("\n==================================\n\n");
                             if(Random.Next(1, 100) <= player.HitChance)
                             {
                                 Console.WriteLine($"You have done {player.Damage} damage to the {enemie.Name}");
@@ -282,11 +283,12 @@ namespace text_adventer_rouge_like.models
                     {
                         Console.WriteLine("they missed");
                     }
+                    Console.WriteLine("\n\n==================================\n\n");
                     Console.WriteLine($"enemie HP: { enemie.HP}");
                     Console.WriteLine($"your HP: {player.HitPoints}");
                     if (enemie.HP <= 0)
                     {
-                        Console.WriteLine($"yay you did it!! The {enemie.Name} has fallen!");
+                        Console.WriteLine($"\nyay you did it!! The {enemie.Name} has fallen!");
                         enemie.HP = enemie.BaseHP;
                         player.Money += Random.Next(25, 51);
                         Console.WriteLine("you found some money too!");
