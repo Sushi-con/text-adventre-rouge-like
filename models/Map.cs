@@ -13,8 +13,6 @@ namespace text_adventer_rouge_like.models
         public int Width { get; set; }
         public int XPosition { get; set; } = 0;
         public int YPosition { get; set; } = 0;
-        public int XExitPosition { get; set; }
-        public int YExitPosition { get; set; }
         public  List<Position> Positions { get; set; } = new List<Position>();
         public List<Position> ShopPositions { get; set; } = new List<Position>();
         public  string MapString { get; set; }
@@ -52,21 +50,6 @@ namespace text_adventer_rouge_like.models
             this.GenerateShops();
         }
 
-        public bool CheckYPosition(Position position, int Y)
-        {
-            if (position.YPosition == Y) { return true; }
-            else
-            {
-                return false;
-            }
-        }
-
-        public bool CheckPosition(Position position, int Y, int X)
-        {
-            if (position.XPosition == X && position.YPosition == Y) { return true; }
-            else { return false; }
-        }
-
         public void GenerateShops()
         {
             Random random = new Random();
@@ -86,26 +69,27 @@ namespace text_adventer_rouge_like.models
             this.Positions.Add( new Position { XPosition = this.XPosition, YPosition = this.YPosition } );            
 
             // loop thorugh the y axies
-            for(int y =  -Hight; y <= Hight; y++)
+            for(int y =  -this.Hight; y <= this.Hight; y++)
             {
                 // loop through the x axies
-                for(int x = -Width; x <= Width; x++)
+                for(int x = -this.Width; x <= this.Width; x++)
                 {
-                    map += checkposition(x, y);
+                    map += this.CheckPosition(x, y);
                 }
                 map += "\n";
             }
+            return this.MapString = map;
         }
 
-        public string checkposition(xpos, ypos)
+        public string CheckPosition(int xpos, int ypos)
         {
-            bool shop = shoppositions.xPosition == xpos && shoppositions.yPosition == ypos;
-            bool explored = positions.xPosition == xpos && positions.yPosition == ypos;
-            bool player = player.xPosition == xpos && player.yPosition == ypos;
+            bool shop = this.ShopPositions.Any(p => p.XPosition == xpos && p.YPosition == ypos);
+            bool explored = this.Positions.Any(p => p.XPosition == xpos && p.YPosition == ypos);
+            bool player = this.XPosition == xpos && this.YPosition == ypos;
 
-            if (shop) { return "[s]"; }
-            if (explored) { return "[x]"; }
             if (player) { return "[o]"; }
+            else if (shop) { return "[s]"; }
+            else if (explored) { return "[x]"; }
             return "[ ]";
         }
     }
