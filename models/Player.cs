@@ -56,9 +56,12 @@ namespace text_adventer_rouge_like.models
                 $"Armor: {this.Armor}\n" +
                 $"HP: {this.HitPoints}\n" +
                 $"HC: {this.HitChance}%\n" +
+                "================\n" +
+                "spells:\n" +
                 $"Spell 1: {this.SpellSlot1.ToString()}\n" +
                 $"Spell 2: {this.SpellSlot2.ToString()}\n" +
                 $"Spell 3: {this.SpellSlot3.ToString()}\n" +
+                "================\n" +
                 $"Levle: {this.levle}\n" +
                 $"Points: {this.Points}/{this.PointCap}";
         }

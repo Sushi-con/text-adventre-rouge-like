@@ -13,3 +13,18 @@ C:\Users\brade\source\repos\text adventer rouge-like\obj\Debug\net9.0\text adven
 C:\Users\brade\source\repos\text adventer rouge-like\obj\Debug\net9.0\text adventer rouge-like.genruntimeconfig.cache
 C:\Users\brade\source\repos\text adventer rouge-like\obj\Debug\net9.0\ref\text adventer rouge-like.dll
 C:\Users\brade\source\repos\text adventer rouge-like\obj\Debug\net9.0\text adventer rouge-like.sourcelink.json
+F:\programming\text-adventre-rouge-like\bin\Debug\net9.0\text adventer rouge-like.exe
+F:\programming\text-adventre-rouge-like\bin\Debug\net9.0\text adventer rouge-like.deps.json
+F:\programming\text-adventre-rouge-like\bin\Debug\net9.0\text adventer rouge-like.runtimeconfig.json
+F:\programming\text-adventre-rouge-like\bin\Debug\net9.0\text adventer rouge-like.dll
+F:\programming\text-adventre-rouge-like\bin\Debug\net9.0\text adventer rouge-like.pdb
+F:\programming\text-adventre-rouge-like\obj\Debug\net9.0\text adventer rouge-like.GeneratedMSBuildEditorConfig.editorconfig
+F:\programming\text-adventre-rouge-like\obj\Debug\net9.0\text adventer rouge-like.AssemblyInfoInputs.cache
+F:\programming\text-adventre-rouge-like\obj\Debug\net9.0\text adventer rouge-like.AssemblyInfo.cs
+F:\programming\text-adventre-rouge-like\obj\Debug\net9.0\text adventer rouge-like.csproj.CoreCompileInputs.cache
+F:\programming\text-adventre-rouge-like\obj\Debug\net9.0\text adventer rouge-like.sourcelink.json
+F:\programming\text-adventre-rouge-like\obj\Debug\net9.0\text adventer rouge-like.dll
+F:\programming\text-adventre-rouge-like\obj\Debug\net9.0\refint\text adventer rouge-like.dll
+F:\programming\text-adventre-rouge-like\obj\Debug\net9.0\text adventer rouge-like.pdb
+F:\programming\text-adventre-rouge-like\obj\Debug\net9.0\text adventer rouge-like.genruntimeconfig.cache
+F:\programming\text-adventre-rouge-like\obj\Debug\net9.0\ref\text adventer rouge-like.dll
