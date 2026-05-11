@@ -13,6 +13,7 @@ namespace text_adventer_rouge_like.models
         public List<Enemies> Enemies { get; set; } = new List<Enemies>();
         public List<Spell> Spells { get; set; } = new List<Spell>();
         public List<Item> Items { get; set; } = new List<Item>();
+        public bool Maze { get; set; } = false;
         public void StartGame(List<Enemies> enemies, List<Spell> spells, List<Item> items)
         {
             Player player1 = new Player();
@@ -21,9 +22,40 @@ namespace text_adventer_rouge_like.models
             player1.SetName();
             player1.ClassSelector(this.Spells);
             player1.SetHardMode();
+            this.MazeMode();
             this.IsAlive = true;
             Store Store = new Store(items);
             this.RunGame(player1, Store);
+        }
+
+        public void MazeMode()
+        {
+            bool question = false;
+            while (!question)
+            {
+                Console.WriteLine("would you like to try the test maze mode Y/N");
+                ConsoleKeyInfo keyinfo = Console.ReadKey(intercept: true);
+                if(keyinfo.Key == ConsoleKey.Y)
+                {
+                    this.Maze = true;
+                    question = true;
+                    return;
+                }
+                else if (keyinfo.Key == ConsoleKey.N)
+                {
+                    question = true;
+                    return;
+                }
+                else
+                {
+                    System.Console.WriteLine("invalide Key enter Y/N");
+                }
+            }
+        }
+
+        public void GenMap(Map map, Player player)
+        {
+           map.GennerateMap(player);
         }
 
         //this is the main gameplay loop. it handles movement special commands, stuff like that.
@@ -32,8 +64,9 @@ namespace text_adventer_rouge_like.models
         public void RunGame(Player player, Store Store)
         {
             Map map = new Map();
+            if(this.Maze){map.Maze = true;}
             map.GennerateSize();
-            map.GennerateMap(player);
+            this.GenMap(map, player);
             Console.Clear();
             Console.WriteLine("press 'H' for help");
             while (IsAlive)
@@ -108,7 +141,7 @@ namespace text_adventer_rouge_like.models
                             Console.WriteLine("You can not move in that direction");
                             player.MoveDown();
                         }
-                        map.GennerateMap(player);
+                        this.GenMap(map, player);
                         break;
 
                     //Move down
@@ -137,7 +170,7 @@ namespace text_adventer_rouge_like.models
                             Console.WriteLine("You can not move in that direction");
                             player.MoveUp();
                         }
-                        map.GennerateMap(player);
+                        this.GenMap(map, player);
                         break;
 
                     //move right
@@ -166,7 +199,7 @@ namespace text_adventer_rouge_like.models
                             Console.WriteLine("You can not move in that direction");
                             player.MoveLeft();
                         }
-                        map.GennerateMap(player);
+                        this.GenMap(map, player);
                         break;
 
                     //move left
@@ -195,7 +228,7 @@ namespace text_adventer_rouge_like.models
                             Console.WriteLine("You can not move in that direction");
                             player.MoveRight();
                         }
-                        map.GennerateMap(player);
+                        this.GenMap(map, player);
                         break;
                 }
 
